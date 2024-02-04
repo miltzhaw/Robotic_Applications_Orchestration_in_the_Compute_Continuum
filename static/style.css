@@ -1,0 +1,174 @@
+select,
+option {
+    padding: 2px 5px;
+}
+
+
+.w3-card-4 {
+    margin-top: 16px;
+}
+
+
+.w3-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+main {
+    margin-bottom: 30px;
+}
+
+footer {
+    font-style: italic;
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+ul {
+    padding-inline-start: 16px;
+    margin-block-start: 0;
+}
+
+li {
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+.card {
+    max-width: 300px;
+    margin: auto;
+    padding-top: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.card-footer {
+    display: none;
+    padding: 16px;
+    text-align: center;
+}
+
+.card-footer button {
+    margin: 0 5px;
+}
+
+.selected-card {
+    background-color: #d7ffde;
+    /* background-color: #f1f1f1; */
+}
+
+.disabled-card {
+    background-color: #f1f1f1;
+}
+
+.disabled-card img {
+    opacity: 0.3;
+}
+
+.disabled-card .container {
+    user-select: none;
+    -webkit-user-select: none;
+    opacity: 0.3;
+}
+
+.card img {
+    width: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+
+.card .container {
+    padding: 16px;
+    text-align: center;
+}
+
+.card .container b {
+    font-size: 1.2rem;
+}
+
+.card .container p {
+    font-size: 0.85rem;
+    text-align: left;
+    margin: 0;
+}
+
+.card .container p span {
+    color: gray;
+}
+
+span.no-service {
+    float: left;
+    color: #f44336 !important;
+    font-size: 0.85rem;
+    margin-inline-start: -16px;
+}
+
+a.link {
+    color: #2196F3;
+    text-decoration: none;
+}
+
+/********************************************************************************
+    Document List
+********************************************************************************/
+div.debug-list {
+    display: flex;
+    flex: 1 0 auto;
+    flex-flow: column nowrap;
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-x: auto;
+}
+
+div.debug-list-headerWrapper,
+div.debug-list-cell {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    padding-right: 2px;
+    width: 100%;
+}
+
+div.debug-list-headerWrapper {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+div.debug-list-cell {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+div.debug-list-cell:hover {
+    background-color: #f4f4f4;
+}
+
+div.debug-list-headerWrapper div,
+div.debug-list-cell div {
+    flex: 1 1 auto;
+    display: flex;
+    height: 100%;
+    text-align: left;
+}
+
+div.debug-list-headerWrapper div:first-child,
+div.debug-list-cell div:first-child {
+    flex-basis: 250px;
+    width: 250px;
+}
+
+div.debug-list-headerWrapper div:nth-child(2),
+div.debug-list-cell div:nth-child(2) {
+    flex-basis: 100%;
+    width: 100%;
+}
+
+div.debug-list-headerWrapper i {
+    font-weight: bold;
+    font-style: normal;
+}
+
+div.debug-list-cell  {
+    font-size: 0.85rem;
+}

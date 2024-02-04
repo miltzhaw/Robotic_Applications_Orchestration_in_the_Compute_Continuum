@@ -1,0 +1,180 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: wireguard-${RAOCC_ROBOT_NAME}
+  labels:
+    app: wireguard-${RAOCC_ROBOT_NAME}
+spec:
+  type: NodePort
+  ports:
+  - name: wg
+    protocol: UDP
+    port: 51820
+    nodePort: ${RAOCC_WG_PORT}
+  selector:
+    name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fxg-bridge-${RAOCC_ROBOT_NAME}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+  template:
+    metadata:
+      name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+      labels:
+        name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+    spec:
+      hostname: "foxglove-bridge-${RAOCC_ROBOT_NAME}"
+      hostAliases:
+      - ip: "127.0.0.1"
+        hostnames:
+        - "foxglove-bridge-${RAOCC_ROBOT_NAME}"
+      containers:
+      - name: wireguard-${RAOCC_ROBOT_NAME}
+        image: robopaas/wireguard-go:20230106
+        command:
+        - sh
+        - -c
+        - echo "Public key '$(wg pubkey < /etc/wireguard/privatekey)'" && /entrypoint.sh
+        ports:
+        - containerPort: 51820
+          protocol: UDP
+          name: wireguard-${RAOCC_ROBOT_NAME}
+        env:
+        - name: LOG_LEVEL
+          value: info
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+          privileged: true
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 200m
+          limits:
+            memory: 128Mi
+            cpu: 200m
+        volumeMounts:
+        - name: cfgmap
+          mountPath: /etc/wireguard/wg0.conf
+          subPath: wg0.conf
+        - name: secret
+          mountPath: /etc/wireguard/privatekey
+          subPath: privatekey
+      - name: foxglove-bridge-${RAOCC_ROBOT_NAME}-container       
+        image: kairuku/foxglove-bridge:latest #TODO
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "2"
+            memory: 1Gi
+          limits:
+            cpu: "2"
+            memory: 1Gi          
+        env:
+          - name: ROS_HOSTNAME
+            value: foxglove-bridge-${RAOCC_ROBOT_NAME}
+        command:
+         - /run_bridge.sh
+        ports:
+        - containerPort: 8765
+          name: fxg-${RAOCC_ROBOT_NAME}-ws
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+          privileged: true
+      - name: fxg-std-${RAOCC_ROBOT_NAME}    
+        image: ghcr.io/foxglove/studio:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "2"
+            memory: 1Gi
+          limits:
+            cpu: "2"
+            memory: 1Gi          
+        env:
+          - name: ROS_HOSTNAME
+            value: foxglove-bridge-${RAOCC_ROBOT_NAME}
+          # - name: PASSWD
+          #   value: $PASSWD
+          # - name: DISPLAY
+          #   value: ":0"
+        ports:
+        - containerPort: 8080
+          name: fxg-std-${RAOCC_ROBOT_NAME}
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+          privileged: true
+      volumes:
+        - name: cfgmap
+          configMap:
+            name: wg-configmap
+        - name: secret
+          secret:
+            secretName: wg-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+spec:
+  clusterIP: None
+  ports:
+    - name: fxg-${RAOCC_ROBOT_NAME}-ws
+      port: 8765
+      protocol: TCP
+    - name: webgui
+      port: 8080
+      targetPort: 8080
+  selector:
+    name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: foxglove-bridge-${RAOCC_ROBOT_NAME}-ingress
+  labels:
+    name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+spec:
+  rules:
+  - host: foxglove-bridge-${RAOCC_ROBOT_NAME}.robopaas.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+            port:
+              number: 8765
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: foxglove-${RAOCC_ROBOT_NAME}-ingress
+  labels:
+    name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+spec:
+  rules:
+  - host: foxglove-${RAOCC_ROBOT_NAME}.robopaas.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: foxglove-bridge-${RAOCC_ROBOT_NAME}
+            port:
+              number: 8080
+---

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Robotic Applications Orchestration in the Compute Continuum</title>
+    <meta charset="utf-8" />
+    <meta property="og:site_name" content="Robotic Applications Orchestration in the Compute Continuum" />
+    <meta property="og:type" content="website" />
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="none" />
+    <meta name="author" content="Mark Straub" />
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='scripts/Utility/Log.js')}}"></script>
+    <script type="module" src="{{url_for('static', filename='scripts/Orchestrator.js')}}" async></script>
+</head>
+
+<body>
+    <div class="w3-container">
+        <div class="w3-card-4">
+            <header class="w3-container w3-pale-green">
+                <h2>Robotic Applications Orchestration in the Compute Continuum</h2>
+            </header>
+            <main class="w3-container">
+                <div class="w3-row">
+                    <div class="w3-col s12 m12 l6">
+                        <h3>Robots</h3>
+                        <p>Loading robots...</p>
+                        <div id="robot-list" class="w3-row">
+                        </div>
+                    </div>
+                    <div class="w3-col s12 m12 l6">
+                        <h3>Services</h3>
+                        <p>Loading services...</p>
+                        <div id="service-list" class="w3-row">
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col">
+                        <details>
+                            <summary>Debug</summary>
+                            <div id="debug">
+                                <div class="debug-list-headerWrapper">
+                                    <div class="debug-detailsHeader">
+                                        <div>
+                                            <i role="presentation">Timestamp</i>
+                                        </div>
+                                        <div>
+                                            <i role="presentation">Detail</i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="region" class="debug-list"></div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </main>
+            <footer class="w3-container w3-light-grey">
+                <b style="float:inline-start">Last update:</b><span id="timestamp"
+                    style="float:inline-start;padding-left:7px;padding-right:20px"></span><b>Open Horizon</b> Exchange
+                Version: {{status["exchange_version"]}} Horizon Version:
+                {{status["horizon_version"]}}
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>
