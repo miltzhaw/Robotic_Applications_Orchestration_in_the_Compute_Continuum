@@ -26,11 +26,7 @@ def main():
     HZN_EXCHANGE_USER_AUTH = os.environ['HZN_EXCHANGE_USER_AUTH']
     openHorizon = MyOpenHorizon(url=os.environ['HZN_EXCHANGE_URL'], org=HZN_ORG_ID, userAuth=HZN_EXCHANGE_USER_AUTH)
 
-    status = openHorizon.status
-    if status is None:
-        return render_template('no_service.html')
-    else:
-        return render_template('index.html', status=status)
+    return render_template('index.html', status=status)
 
 
 if __name__ == '__main__':
