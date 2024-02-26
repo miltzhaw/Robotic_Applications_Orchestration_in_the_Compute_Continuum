@@ -17,11 +17,33 @@ class MyOpenHorizon:
         self._userName = userAuth.split(":")[0]
         self._password = userAuth.split(":")[1]
         self._headers = {'Content-Type': 'application/json'}
-        # self._exchangeAPI = None if self.status is None else self.status["exchange_api"]
+        self.status = self.get_status()
+        self._exchangeAPI = None if self.status is None else self.status["exchange_api"]
         self.nodes = MyOpenHorizonNode(url=url, org=org, userName=self._userName, password=self._password, headers=self._headers, exchangeAPI=self._exchangeAPI)
         self.policies = MyOpenHorizonPolicies(url=url, org=org, userName=self._userName, password=self._password, headers=self._headers, exchangeAPI=self._exchangeAPI)
         self.services = MyOpenHorizonService(url=url, org=org, userName=self._userName, password=self._password, headers=self._headers, exchangeAPI=self._exchangeAPI)
-    
+
+
+def get_status(self):
+        """
+        Gets the status of the robot
+        https://open-horizon.github.io/docs/anax/docs/api/
+        """
+
+        # Check if the service is running
+        try:
+            status = requests.get("http://160.85.252.236:8510/status", headers=self._headers)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            return None
+
+        status = status.json()
+
+        # Check if the status contains the configuration
+        if "configuration" not in status.keys():
+            return None
+
+        return status["configuration"]
 
 if __name__ == '__main__':
     moh = MyOpenHorizon(url="http://160.85.252.236:3090", org="myorg", userAuth="myuser:mypassword")
