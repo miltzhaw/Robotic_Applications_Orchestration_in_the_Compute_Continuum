@@ -31,12 +31,12 @@ class MyOpenHorizon:
         """
 
         # Check if the service is running
-        try:
-            status = requests.get("http://160.85.252.236:8510/status", headers=self._headers)
-        except requests.exceptions.RequestException as e:
-            print(e)
-            return None
-
+       # try:
+       #     status = requests.get("http://160.85.252.236:8510/status", headers=self._headers)
+       # except requests.exceptions.RequestException as e:
+       #     print(e)
+       #     return None
+        return None
         status = status.json()
 
         # Check if the status contains the configuration
