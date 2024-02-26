@@ -18,7 +18,8 @@ class MyOpenHorizon:
         self._password = userAuth.split(":")[1]
         self._headers = {'Content-Type': 'application/json'}
         self.status = self.get_status()
-        self._exchangeAPI = None if self.status is None else self.status["exchange_api"]
+        self._exchangeAPI = self.status["exchange_api"]
+        # self._exchangeAPI = None if self.status is None else self.status["exchange_api"]
         self.nodes = MyOpenHorizonNode(url=url, org=org, userName=self._userName, password=self._password, headers=self._headers, exchangeAPI=self._exchangeAPI)
         self.policies = MyOpenHorizonPolicies(url=url, org=org, userName=self._userName, password=self._password, headers=self._headers, exchangeAPI=self._exchangeAPI)
         self.services = MyOpenHorizonService(url=url, org=org, userName=self._userName, password=self._password, headers=self._headers, exchangeAPI=self._exchangeAPI)
