@@ -24,7 +24,7 @@ class MyOpenHorizon:
         self.services = MyOpenHorizonService(url=url, org=org, userName=self._userName, password=self._password, headers=self._headers, exchangeAPI=self._exchangeAPI)
 
 
-def get_status(self):
+    def get_status(self):
         """
         Gets the status of the robot
         https://open-horizon.github.io/docs/anax/docs/api/
@@ -47,7 +47,9 @@ def get_status(self):
 
 if __name__ == '__main__':
     moh = MyOpenHorizon(url="http://160.85.252.236:3090", org="myorg", userAuth="myuser:mypassword")
-
+    status = moh.get_status()
+    print(status)
+    
     # nodes = moh.nodes.get()
     # print (nodes)
 
