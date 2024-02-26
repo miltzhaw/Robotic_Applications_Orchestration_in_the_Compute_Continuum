@@ -37,7 +37,7 @@ class MyOpenHorizon:
        # except requests.exceptions.RequestException as e:
        #     print(e)
        #     return None
-        return None
+        return "exchange_api"
         status = status.json()
 
         # Check if the status contains the configuration
@@ -48,8 +48,8 @@ class MyOpenHorizon:
 
 if __name__ == '__main__':
     moh = MyOpenHorizon(url="http://160.85.252.236:3090", org="myorg", userAuth="myuser:mypassword")
-    status = moh.get_status()
-    print(status)
+    #status = moh.get_status()
+    #print(status)
     
     # nodes = moh.nodes.get()
     # print (nodes)
