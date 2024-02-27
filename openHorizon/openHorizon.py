@@ -18,7 +18,7 @@ class MyOpenHorizon:
         self._password = userAuth.split(":")[1]
         self._headers = {'Content-Type': 'application/json'}
         #self.status = self.get_status()
-        self.status = 1
+        self.status = "OK"
         # self._exchangeAPI = None if self.status is None else self.status["exchange_api"]
         self._exchangeAPI = url
         self.nodes = MyOpenHorizonNode(url=url, org=org, userName=self._userName, password=self._password, headers=self._headers, exchangeAPI=self._exchangeAPI)
@@ -50,7 +50,7 @@ class MyOpenHorizon:
 if __name__ == '__main__':
     moh = MyOpenHorizon(url="http://160.85.252.236:3090", org="myorg", userAuth="myuser:mypassword")
     #status = moh.get_status()
-    #print(status)
+    print(status)
     
     # nodes = moh.nodes.get()
     # print (nodes)
