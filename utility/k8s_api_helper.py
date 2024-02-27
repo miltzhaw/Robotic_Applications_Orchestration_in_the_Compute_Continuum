@@ -44,7 +44,7 @@ class KubernetesAPIHelper:
         # https://www.geeksforgeeks.org/python-copy-contents-of-one-file-to-another-file/
         try:
             # open both files
-            with open('docker_yaml/' + yaml_file, 'r') as r, open('docker_yaml/deployed/' + self.robot + '-' + yaml_file, 'w') as f:
+            with open('../docker_yaml/' + yaml_file, 'r') as r, open('docker_yaml/deployed/' + self.robot + '-' + yaml_file, 'w') as f:
 
                 # read content from first file 
                 for line in r:
