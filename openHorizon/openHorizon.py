@@ -37,9 +37,11 @@ class MyOpenHorizon:
        # except requests.exceptions.RequestException as e:
        #     print(e)
        #     return None
-        return "exchange_api"
+        status = "exchange_api"
+        return status["exchange_api"]
+        
         status = status.json()
-
+        
         # Check if the status contains the configuration
         if "configuration" not in status.keys():
             return None
