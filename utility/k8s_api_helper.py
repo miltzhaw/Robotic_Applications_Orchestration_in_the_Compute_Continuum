@@ -30,7 +30,7 @@ class KubernetesAPIHelper:
         self._create_deployed_yaml_file(yaml_file)
 
         try:
-            api_response = utils.create_from_yaml(k8s_client, '/root/Robotic_Applications_Orchestration_in_the_Compute_Continuum/docker_yaml/deployed/' + self.robot + '-' + yaml_file, namespace=self.namespace)
+            api_response = utils.create_from_yaml(k8s_client, '/root/Robotic_Applications_Orchestration_in_the_Compute_Continuum/docker_yaml/' + self.robot + '-' + yaml_file, namespace=self.namespace)
             for i in api_response:
                 print("'%s' successfully created" %(i[0].metadata.name))
 
@@ -44,7 +44,7 @@ class KubernetesAPIHelper:
         # https://www.geeksforgeeks.org/python-copy-contents-of-one-file-to-another-file/
         try:
             # open both files
-            with open('/root/Robotic_Applications_Orchestration_in_the_Compute_Continuum/docker_yaml/' + yaml_file, 'r') as r, open('/root/Robotic_Applications_Orchestration_in_the_Compute_Continuum/docker_yaml/deployed/' + self.robot + '-' + yaml_file, 'w') as f:
+            with open('/root/Robotic_Applications_Orchestration_in_the_Compute_Continuum/docker_yaml/' + yaml_file, 'r') as r, open('/root/Robotic_Applications_Orchestration_in_the_Compute_Continuum/docker_yaml/' + self.robot + '-' + yaml_file, 'w') as f:
 
                 # read content from first file 
                 for line in r:
